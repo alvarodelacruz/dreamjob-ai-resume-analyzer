@@ -3,36 +3,45 @@
 import React, { useState } from 'react';
 
 const CVUpload: React.FC = () => {
-  const [cv, setCV] = useState<string>('');
+  const [file, setFile] = useState<File | null>(null);
 
   return (
-    <div className="w-full max-w-2xl mb-6">
-      <label className="block text-gray-700 text-sm font-bold mb-2">
-        Pega tu CV aquí o sube un archivo
+    <div className="w-full max-w-2xl mb-6 flex flex-col items-center">
+      <label className="block text-[#E64A2E] text-lg font-medium mb-2">
+        Introduce tu CV
       </label>
-      <textarea
-        className="w-full p-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        rows={10}
-        value={cv}
-        onChange={(e) => setCV(e.target.value)}
-        placeholder="Pega el contenido de tu CV aquí..."
-      />
       <div className="mt-2">
         <input
           type="file"
           accept=".pdf,.doc,.docx,.txt"
           className="block w-full text-sm text-gray-500
-            file:mr-4 file:py-2 file:px-4
-            file:rounded-full file:border-0
-            file:text-sm file:font-semibold
-            file:bg-blue-50 file:text-blue-700
-            hover:file:bg-blue-100"
+            [&::file-selector-button]:mr-4 
+            [&::file-selector-button]:py-2 
+            [&::file-selector-button]:px-4
+            [&::file-selector-button]:rounded-full
+            [&::file-selector-button]:border-0
+            [&::file-selector-button]:text-sm
+            [&::file-selector-button]:font-semibold
+            [&::file-selector-button]:bg-[#FF5733]
+            [&::file-selector-button]:text-white
+            [&::file-selector-button]:duration-200
+            hover:[&::file-selector-button]:bg-[#E64A2E]
+            transition-all duration-200"
+          aria-label="Seleccionar CV"
           onChange={(e) => {
-            // Aquí implementaremos la lógica para leer archivos
-            console.log('Archivo seleccionado:', e.target.files?.[0]);
+            const selectedFile = e.target.files?.[0];
+            if (selectedFile) {
+              setFile(selectedFile);
+              console.log('Archivo seleccionado:', selectedFile);
+            }
           }}
         />
       </div>
+      {file && (
+        <p className="mt-2 text-sm text-gray-600">
+          Archivo seleccionado: {file.name}
+        </p>
+      )}
     </div>
   );
 };
