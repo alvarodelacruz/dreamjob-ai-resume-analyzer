@@ -2,9 +2,7 @@
 
 import React, { useState } from 'react';
 
-const CVUpload: React.FC = () => {
-  const [file, setFile] = useState<File | null>(null);
-
+const CVUpload: React.FC<{ setCvFile: (file: File | null) => void }> = ({ setCvFile }) => {
   return (
     <div className="w-full max-w-2xl mb-6 flex flex-col items-center">
       <label className="block text-[#E64A2E] text-lg font-medium mb-2">
@@ -29,19 +27,12 @@ const CVUpload: React.FC = () => {
             transition-all duration-200"
           aria-label="Seleccionar CV"
           onChange={(e) => {
-            const selectedFile = e.target.files?.[0];
-            if (selectedFile) {
-              setFile(selectedFile);
+              const selectedFile = e.target.files?.[0];
+              setCvFile(selectedFile || null);
               console.log('Archivo seleccionado:', selectedFile);
-            }
           }}
         />
       </div>
-      {file && (
-        <p className="mt-2 text-sm text-gray-600">
-          Archivo seleccionado: {file.name}
-        </p>
-      )}
     </div>
   );
 };

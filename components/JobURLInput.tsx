@@ -2,9 +2,7 @@
 
 import React, { useState } from 'react';
 
-const JobURLInput: React.FC = () => {
-  const [jobUrl, setJobUrl] = useState<string>('');
-
+const JobURLInput: React.FC<{ setJobUrl: (url: string) => void }> = ({ setJobUrl }) => {
   return (
     <div className="w-full max-w-2xl mb-6 flex flex-col items-center">
       <label className="block text-[#E64A2E] text-lg font-medium mb-2">
@@ -14,8 +12,11 @@ const JobURLInput: React.FC = () => {
         <textarea
           className="w-full p-4 rounded-lg bg-white focus:outline-none resize-none"
           rows={2}
-          value={jobUrl}
-          onChange={(e) => setJobUrl(e.target.value)}
+          onChange={(e) => {
+              const url = e.target.value;
+              setJobUrl(url);
+              console.log('URL ingresada:', url);
+          }}
           placeholder="Pega la URL de la oferta o su descripción aquí..."
         />
       </div>
