@@ -97,8 +97,11 @@ export async function POST(request: Request) {
 
         // Prepare prompt
         const prompt = `
+            Escribe la respuesta en español
             Actúa como un asesor de carrera especializado en jóvenes sin experiencia. 
             El usuario te da su CV y una oferta de trabajo. 
+            Importante: tu respuesta se va a usar como análisis en una página web usando Markdown, por lo que 
+            ve al grano y da los datos y recomendaciones directamente.
             Tu tarea es comparar ambos y generar un análisis claro con estos apartados:
 
             1. Coincidencias relevantes entre el CV y la oferta.
@@ -106,6 +109,19 @@ export async function POST(request: Request) {
             3. Cómo mejorar el CV con lo que el usuario ya tiene.
             4. Recomendaciones específicas para añadir frases, secciones o proyectos personales.
             5. Consejos realistas para alguien sin experiencia que quiera aplicar a este puesto.
+
+            Se mostrarán estos apartados en la web con sus respectivos títulos, por lo que 
+            debes usar sintaxis Markdown correcta. Usa ## para los títulos de sección y **negrita** para los puntos importantes.
+            NO uses *cursiva* para la negrita, usa **doble asterisco**.
+            
+            Por ejemplo:
+            ## 1. Coincidencias relevantes
+            **Punto importante 1**
+            **Punto importante 2**
+            
+            ## 2. Habilidades que faltan
+            **Punto importante 1**
+            **Punto importante 2**
 
             CV:
             ${cvText}

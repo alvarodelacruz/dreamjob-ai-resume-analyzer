@@ -21,7 +21,7 @@ const Page: React.FC = () => {
                     Optimiza tu CV para conseguir tu <span className="font-bold bg-gradient-to-r from-[#ce270a] to-[#f4573b] text-transparent bg-clip-text">DreamJob</span>
                 </span>
             </h1>
-            <h3 className="text-[#E64A2E] text-lg mb-8">Selecciona tu CV, pega una oferta de trabajo, y nosotros haremos la magia</h3>
+            <h3 className="text-[#5c5c5c] text-lg mb-8">Selecciona tu CV, pega una oferta de trabajo, y nosotros haremos la magia</h3>
             <CVUpload setCvFile={setCvFile} />
             <JobURLInput setJobUrl={setJobUrl} />
             <AnalyzeButton cvFile={cvFile} jobUrl={jobUrl} setResult={setResult} />
