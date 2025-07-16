@@ -102,26 +102,42 @@ export async function POST(request: Request) {
             El usuario te da su CV y una oferta de trabajo. 
             Importante: tu respuesta se va a usar como análisis en una página web usando Markdown, por lo que 
             ve al grano y da los datos y recomendaciones directamente.
-            Tu tarea es comparar ambos y generar un análisis claro con estos apartados:
-
-            1. Coincidencias relevantes entre el CV y la oferta.
-            2. Habilidades o conocimientos que faltan.
-            3. Cómo mejorar el CV con lo que el usuario ya tiene.
-            4. Recomendaciones específicas para añadir frases, secciones o proyectos personales.
-            5. Consejos realistas para alguien sin experiencia que quiera aplicar a este puesto.
-
-            Se mostrarán estos apartados en la web con sus respectivos títulos, por lo que 
-            debes usar sintaxis Markdown correcta. Usa ## para los títulos de sección y **negrita** para los puntos importantes.
-            NO uses *cursiva* para la negrita, usa **doble asterisco**.
             
-            Por ejemplo:
+            Empieza tu análisis calculando un porcentaje de coincidencia entre el CV y la oferta.
+            Este porcentaje debe estar en la primera línea de tu respuesta con este formato exacto:
+            "Porcentaje de coincidencia: X%" donde X es un número entre 0 y 100.
+            
+            Luego, tu tarea es comparar ambos y generar un análisis claro con estos apartados:
+
             ## 1. Coincidencias relevantes
-            **Punto importante 1**
-            **Punto importante 2**
-            
-            ## 2. Habilidades que faltan
-            **Punto importante 1**
-            **Punto importante 2**
+            Lista las 3-5 coincidencias más importantes entre el CV y la oferta.
+            Cada punto debe ser concreto y empezar con **texto en negrita**.
+            Máximo 5 líneas en total.
+
+            ## 2. Habilidades o conocimientos que faltan
+            Lista las 3-5 habilidades o conocimientos principales que faltan en el CV pero se requieren en la oferta.
+            Cada punto debe ser concreto y empezar con **texto en negrita**.
+            Máximo 5 líneas en total.
+
+            ## 3. Cómo mejorar el CV
+            Lista las 3-5 mejoras más importantes que se pueden hacer al CV con lo que el usuario ya tiene.
+            Cada punto debe ser concreto y empezar con **texto en negrita**.
+            Máximo 5 líneas en total.
+
+            ## 4. Consejos realistas
+            Lista 3-5 consejos realistas para alguien sin experiencia que quiera aplicar a este puesto.
+            Cada punto debe ser concreto y empezar con **texto en negrita**.
+            Máximo 5 líneas en total.
+
+            ## 5. Análisis detallado
+            Aquí puedes elaborar más sobre cada punto, con sugerencias específicas y recomendaciones detalladas.
+
+            IMPORTANTE: 
+            1. Usa sintaxis Markdown correcta.
+            2. Usa **doble asterisco** para la negrita, NO uses *cursiva* para la negrita.
+            3. El texto debe ser muy conciso en los primeros 4 apartados.
+            4. Cada punto principal debe ocupar máximo 1 línea.
+            5. Es IMPRESCINDIBLE que la primera línea tenga el porcentaje de coincidencia con el formato indicado.
 
             CV:
             ${cvText}

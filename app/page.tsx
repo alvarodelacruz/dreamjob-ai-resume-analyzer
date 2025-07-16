@@ -11,20 +11,24 @@ const Page: React.FC = () => {
     const [jobUrl, setJobUrl] = useState<string>('');
     const [result, setResult] = useState<string>('');
 
-    console.log('cvFile:', cvFile);
-    console.log('jobUrl:', jobUrl);
-
     return (
-        <div className="flex flex-col items-center p-1">
-            <h1 className="text-5xl mb-4">
+        <div className="flex flex-col items-center p-1 mx-auto">
+            <h1 className="text-4xl md:text-5xl mb-4 text-center">
                 <span className="bg-gradient-to-r from-[#a31900] to-[#f4573b] text-transparent bg-clip-text">
                     Optimiza tu CV para conseguir tu <span className="font-bold bg-gradient-to-r from-[#ce270a] to-[#f4573b] text-transparent bg-clip-text">DreamJob</span>
                 </span>
             </h1>
-            <h3 className="text-[#5c5c5c] text-lg mb-8">Selecciona tu CV, pega una oferta de trabajo, y nosotros haremos la magia</h3>
-            <CVUpload setCvFile={setCvFile} />
-            <JobURLInput setJobUrl={setJobUrl} />
-            <AnalyzeButton cvFile={cvFile} jobUrl={jobUrl} setResult={setResult} />
+            <h3 className="text-[#5c5c5c] text-lg mb-8 text-center">Selecciona tu CV, pega una oferta de trabajo, y nosotros haremos la magia</h3>
+            
+            <div className="w-full max-w-4xl flex flex-col items-center">
+                <CVUpload setCvFile={setCvFile} />
+                <JobURLInput setJobUrl={setJobUrl} />
+                
+                <div className="w-full flex justify-center my-6">
+                    <AnalyzeButton cvFile={cvFile} jobUrl={jobUrl} setResult={setResult} />
+                </div>
+            </div>
+            
             <ResultsDisplay result={result} />
         </div>
     );

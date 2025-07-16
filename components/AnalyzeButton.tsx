@@ -57,23 +57,25 @@ async function analyzeCV(cvFile: File, jobUrl: string, setResult: (result: strin
 
 const AnalyzeButton: React.FC<{ cvFile: File | null; jobUrl: string; setResult: (result: string) => void }> = ({ cvFile, jobUrl, setResult }) => {
     return (
-        <button
-            className="bg-gradient-to-r from-[#FF5733] to-[#E64A2E] hover:from-[#E64A2E] hover:to-[#FF5733] text-white font-bold py-4 px-8 rounded-lg
-                transition duration-200 ease-in-out transform hover:scale-105 shadow-lg"
-            onClick={() => {
-                if (cvFile && jobUrl) {
-                    analyzeCV(cvFile, jobUrl, setResult);
-                } else {
-                    let errorMsg = 'Por favor, ';
-                    if (!cvFile) errorMsg += 'sube un CV';
-                    if (!cvFile && !jobUrl) errorMsg += ' y ';
-                    if (!jobUrl) errorMsg += 'proporciona una URL o descripción válida';
-                    setResult(errorMsg);
-                }
-            }}
-        >
-            Analizar CV
-        </button>
+        <div className="flex justify-center w-full">
+            <button
+                className="bg-gradient-to-r from-[#FF5733] to-[#E64A2E] hover:from-[#E64A2E] hover:to-[#FF5733] text-white font-bold py-4 px-8 rounded-lg
+                    transition duration-200 ease-in-out transform hover:scale-105 shadow-lg"
+                onClick={() => {
+                    if (cvFile && jobUrl) {
+                        analyzeCV(cvFile, jobUrl, setResult);
+                    } else {
+                        let errorMsg = 'Por favor, ';
+                        if (!cvFile) errorMsg += 'sube un CV';
+                        if (!cvFile && !jobUrl) errorMsg += ' y ';
+                        if (!jobUrl) errorMsg += 'proporciona una URL o descripción válida';
+                        setResult(errorMsg);
+                    }
+                }}
+            >
+                Analizar CV
+            </button>
+        </div>
     );
 };
 
