@@ -13,12 +13,11 @@ const Page: React.FC = () => {
 
     return (
         <div className="flex flex-col items-center p-1 mx-auto">
-            <h1 className="text-4xl md:text-5xl mb-4 text-center">
+            <h1 className="text-4xl md:text-5xl mb-8 text-center">
                 <span className="bg-gradient-to-r from-[#a31900] to-[#f4573b] text-transparent bg-clip-text">
                     Optimiza tu CV para conseguir tu <span className="font-bold bg-gradient-to-r from-[#ce270a] to-[#f4573b] text-transparent bg-clip-text">DreamJob</span>
                 </span>
             </h1>
-            <h3 className="text-[#5c5c5c] text-lg mb-8 text-center">Selecciona tu CV, pega una oferta de trabajo, y nosotros haremos la magia</h3>
             
             <div className="w-full max-w-4xl flex flex-col items-center">
                 <CVUpload setCvFile={setCvFile} />

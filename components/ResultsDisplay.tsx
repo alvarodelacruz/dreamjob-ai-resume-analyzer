@@ -105,9 +105,9 @@ const ResultsDisplay: React.FC<{ result: string }> = ({ result }) => {
   
   if (result === 'Analizando tu CV, por favor espera...') {
     return (
-      <div className="w-full max-w-5xl p-6 mt-8 bg-white rounded-lg shadow-md text-center">
+      <div className="w-full max-w-5xl p-3 mt-0 bg-white rounded-lg shadow-md text-center">
         <div className="flex flex-col items-center justify-center">
-          <svg className="animate-spin h-10 w-10 text-[#E64A2E] mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <svg className="animate-spin h-10 w-10 text-[#E64A2E] mb-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
           </svg>
@@ -133,9 +133,12 @@ const ResultsDisplay: React.FC<{ result: string }> = ({ result }) => {
   }
 
   return (
-    <div className="w-full max-w-5xl mt-8 mx-auto">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">Resultados del análisis</h2>
-      
+    <div id="results-section" className="w-full max-w-5xl mt-4 mx-auto">
+      <h2 className="text-2xl font-bold mb-0 text-center">
+        <span className="bg-gradient-to-r from-[#a31900] to-[#f4573b] text-transparent bg-clip-text">
+          Resultados del análisis
+        </span>
+      </h2>
       {/* Indicador de porcentaje de coincidencia */}
       <div className="mb-8 bg-white rounded-xl shadow-md p-6 w-full">
         <div className="flex items-center justify-between mb-2">
@@ -154,17 +157,18 @@ const ResultsDisplay: React.FC<{ result: string }> = ({ result }) => {
       </div>
       
       {/* Secciones del análisis - 2 por fila, ocupando 80% del ancho */}
-      <div className="w-[80%] mx-auto grid grid-cols-1 sm:grid-cols-2 gap-6">
+      {/* Secciones del análisis - 2 por fila, con menor altura */}
+      <div className="w-[100%] mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4">
         {parsedSections.map((section, index) => (
           <div 
             key={index} 
-            className={`p-5 rounded-xl shadow-md border-l-4 ${section.color} transition-all duration-200 hover:shadow-lg`}
+            className={`p-4 rounded-xl shadow-md border-l-4 ${section.color} transition-all duration-200 hover:shadow-lg`}
           >
-            <div className="flex items-center mb-3">
+            <div className="flex items-center mb-2">
               {section.icon}
-              <h3 className="ml-2 text-lg font-semibold text-gray-800">{section.title}</h3>
+              <h3 className="ml-2 text-base font-semibold text-gray-800">{section.title}</h3>
             </div>
-            <div className="prose prose-sm max-w-none text-gray-600">
+            <div className="prose prose-sm max-w-none text-gray-600 text-sm">
               <ReactMarkdown>{section.content}</ReactMarkdown>
             </div>
           </div>

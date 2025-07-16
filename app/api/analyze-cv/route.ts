@@ -110,24 +110,24 @@ export async function POST(request: Request) {
             Luego, tu tarea es comparar ambos y generar un análisis claro con estos apartados:
 
             ## 1. Coincidencias relevantes
-            Lista las 3-5 coincidencias más importantes entre el CV y la oferta.
+            Lista las 3-4 coincidencias más importantes entre el CV y la oferta.
             Cada punto debe ser concreto y empezar con **texto en negrita**.
-            Máximo 5 líneas en total.
+            Máximo 4 líneas en total.
 
             ## 2. Habilidades o conocimientos que faltan
-            Lista las 3-5 habilidades o conocimientos principales que faltan en el CV pero se requieren en la oferta.
+            Lista las 3-4 habilidades o conocimientos principales que faltan en el CV pero se requieren en la oferta.
             Cada punto debe ser concreto y empezar con **texto en negrita**.
-            Máximo 5 líneas en total.
+            Máximo 4 líneas en total.
 
             ## 3. Cómo mejorar el CV
-            Lista las 3-5 mejoras más importantes que se pueden hacer al CV con lo que el usuario ya tiene.
+            Lista las 3-4 mejoras más importantes que se pueden hacer al CV con lo que el usuario ya tiene.
             Cada punto debe ser concreto y empezar con **texto en negrita**.
-            Máximo 5 líneas en total.
+            Máximo 4 líneas en total.
 
             ## 4. Consejos realistas
-            Lista 3-5 consejos realistas para alguien sin experiencia que quiera aplicar a este puesto.
+            Lista 3-4 consejos realistas para alguien sin experiencia que quiera aplicar a este puesto.
             Cada punto debe ser concreto y empezar con **texto en negrita**.
-            Máximo 5 líneas en total.
+            Máximo 4 líneas en total.
 
             ## 5. Análisis detallado
             Aquí puedes elaborar más sobre cada punto, con sugerencias específicas y recomendaciones detalladas.
