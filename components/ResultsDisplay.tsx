@@ -10,10 +10,89 @@ interface AnalysisSection {
   icon: JSX.Element;
 }
 
-const ResultsDisplay: React.FC<{ result: string }> = ({ result }) => {
+const ResultsDisplay: React.FC<{ 
+  result: string;
+  originalCV?: File | null; // Añadir prop para el CV original
+}> = ({ result, originalCV }) => {
   const [parsedSections, setParsedSections] = useState<AnalysisSection[]>([]);
-  const [matchPercentage, setMatchPercentage] = useState<number>(65); // Valor por defecto
-  
+  const [matchPercentage, setMatchPercentage] = useState<number>(65);
+  const [isGeneratingCV, setIsGeneratingCV] = useState<boolean>(false);
+  const [optimizationError, setOptimizationError] = useState<string>("");
+
+  // Función para generar y descargar el CV optimizado
+  const handleDownloadOptimizedCV = async () => {
+    if (!result || !originalCV) {
+      setOptimizationError("No se puede generar el CV optimizado. Asegúrate de haber subido un CV y realizado el análisis.");
+      return;
+    }
+
+    setIsGeneratingCV(true);
+    setOptimizationError("");
+    
+    try {
+      // Leer el archivo original
+      const reader = new FileReader();
+      
+      reader.onload = async (event) => {
+        try {
+          const base64File = event.target?.result?.toString().split(',')[1];
+          
+          // Llamar a un nuevo endpoint que creará el CV optimizado
+          const response = await fetch('/api/generate-cv', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              originalCV: base64File,
+              fileName: originalCV.name,
+              fileType: originalCV.type,
+              analysis: result
+            }),
+          });
+          
+          if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+          }
+          
+          // Recibimos el documento optimizado como blob
+          const blob = await response.blob();
+
+          // Crear un enlace para la descarga - siempre usar .txt como extensión
+          const fileName = `CV_Optimizado_ATS.pdf`;
+
+          const downloadLink = document.createElement('a');
+          downloadLink.href = URL.createObjectURL(blob);
+          downloadLink.download = fileName;
+          document.body.appendChild(downloadLink);
+          downloadLink.click();
+          document.body.removeChild(downloadLink);
+          
+        } catch (error) {
+          console.error("Error generando CV optimizado:", error);
+          setOptimizationError("Error al generar el CV optimizado: " + 
+            (error instanceof Error ? error.message : "Desconocido"));
+        } finally {
+          setIsGeneratingCV(false);
+        }
+      };
+      
+      reader.onerror = (error) => {
+        console.error("Error leyendo archivo original:", error);
+        setOptimizationError("Error al leer el archivo original");
+        setIsGeneratingCV(false);
+      };
+      
+      reader.readAsDataURL(originalCV);
+      
+    } catch (error) {
+      console.error("Error en handleDownloadOptimizedCV:", error);
+      setOptimizationError("Error al procesar el CV: " + 
+        (error instanceof Error ? error.message : "Desconocido"));
+      setIsGeneratingCV(false);
+    }
+  };
+
   useEffect(() => {
     if (!result || result === 'Analizando tu CV, por favor espera...') {
       return;
@@ -133,7 +212,7 @@ const ResultsDisplay: React.FC<{ result: string }> = ({ result }) => {
   }
 
   return (
-    <div id="results-section" className="w-full max-w-5xl mt-4 mx-auto">
+    <div id="results-section" className="w-full max-w-5xl mt-4   mx-auto">
       <h2 className="text-2xl font-bold mb-0 text-center">
         <span className="bg-gradient-to-r from-[#a31900] to-[#f4573b] text-transparent bg-clip-text">
           Resultados del análisis
@@ -175,21 +254,37 @@ const ResultsDisplay: React.FC<{ result: string }> = ({ result }) => {
         ))}
       </div>
       
-      {/* Enlace para ver análisis completo */}
+      {/* Botón para descargar CV optimizado */}
       <div className="mt-6 text-center">
         <button 
-          onClick={() => document.getElementById('full-analysis')?.classList.toggle('hidden')}
-          className="text-[#E64A2E] font-medium hover:text-[#FF5733] transition-colors"
+          onClick={handleDownloadOptimizedCV}
+          disabled={isGeneratingCV}
+          className="bg-gradient-to-r from-[#FF5733] to-[#E64A2E] hover:from-[#E64A2E] hover:to-[#FF5733] text-white font-medium py-2 px-6 rounded-lg
+            transition duration-200 ease-in-out transform hover:scale-105 shadow-md flex items-center mx-auto disabled:opacity-70"
         >
-          Ver análisis completo ↓
+          {isGeneratingCV ? (
+            <>
+              <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Generando CV optimizado...
+            </>
+          ) : (
+            <>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              Descargar CV optimizado para ATS
+            </>
+          )}
         </button>
         
-        <div id="full-analysis" className="hidden mt-8 bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-xl font-bold mb-4 text-gray-800">Análisis detallado</h3>
-          <div className="prose max-w-none text-gray-700">
-            <ReactMarkdown>{result}</ReactMarkdown>
-          </div>
-        </div>
+        {optimizationError && (
+          <p className="mt-2 text-sm text-red-500">
+            {optimizationError}
+          </p>
+        )}
       </div>
     </div>
   );

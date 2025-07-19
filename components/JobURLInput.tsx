@@ -18,6 +18,7 @@ const JobURLInput: React.FC<{ setJobUrl: (url: string) => void }> = ({ setJobUrl
               console.log('URL ingresada:', url);
           }}
           placeholder="Pega la URL de la oferta o su descripción aquí..."
+          spellCheck ="false"
         />
       </div>
     </div>
