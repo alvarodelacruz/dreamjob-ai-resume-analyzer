@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="./images/mi_foto.png" width="400"/>
+  <img src="./public/interface.png" width="400"/>
 </p>
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
