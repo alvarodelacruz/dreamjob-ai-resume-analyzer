@@ -2,8 +2,8 @@
   <img src="./public/dreamjoblogo.png" width="400"/>
 </p>
 <p align="center">
-  <img src="./public/interface2.png" width="400"/>
-  <img src="./public/results.png" width="400"/
+  <img src="./public/interface2.png" width="600"/>
+  <img src="./public/results.png" width="600"/
 </p>
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
