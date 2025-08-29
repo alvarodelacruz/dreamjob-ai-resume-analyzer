@@ -5,7 +5,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     return (
         <html lang="en">
             <body>
-                <div className="min-h-screen flex flex-col">
+                <div className="min-h-screen flex flex-col bg-pattern">
                     <header className=" bg-gradient-to-r from-[#FF5733] to-[#E64A2E] text-white py-6 px-4 shadow-lg">
                         <div className="max-w-6xl mx-auto flex justify-center items-center">
                             <div className="flex items-center space-x-3">

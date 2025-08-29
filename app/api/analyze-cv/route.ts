@@ -151,7 +151,7 @@ export async function POST(request: Request) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-goog-api-key': `AIzaSyDnVELTa2yMfmiW2-fOD6HlcDj1G7yq4XQ`, // Tu clave de API
+                'X-goog-api-key': `AIzaSyCoiTkZx3QbP6gFXDR6JPCVaYuTwluqOVQ`, // Tu clave de API
             },
             body: JSON.stringify({
                 contents: [

@@ -12,7 +12,16 @@ const Page: React.FC = () => {
     const [result, setResult] = useState<string>('');
 
     return (
-        <div className="flex flex-col items-center p-1 mx-auto">
+        <div 
+            className="flex flex-col items-center p-1 mx-auto" 
+            style={{ 
+                transform: 'scale(0.9)', 
+                transformOrigin: 'top center',
+                margin: '0 auto',
+                width: '100%',
+                maxWidth: 'calc(100% / 0.9)'  // Compensación exacta para escala de 0.9
+            }}
+        >
             <h1 className="text-4xl md:text-5xl mb-8 text-center">
                 <span className="bg-gradient-to-r from-[#a31900] to-[#f4573b] text-transparent bg-clip-text">
                     Optimiza tu CV para conseguir tu <span className="font-bold bg-gradient-to-r from-[#ce270a] to-[#f4573b] text-transparent bg-clip-text">DreamJob</span>
@@ -28,7 +37,7 @@ const Page: React.FC = () => {
                 </div>
             </div>
             
-            <ResultsDisplay result={result} />
+            <ResultsDisplay result={result} originalCV={cvFile} />
         </div>
     );
 };

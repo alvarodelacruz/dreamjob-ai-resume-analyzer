@@ -6,7 +6,7 @@ async function analyzeCV(
   cvFile: File, 
   jobUrl: string, 
   setResult: (result: string) => void,
-  setProgress: (progress: number) => void
+  setProgress: React.Dispatch<React.SetStateAction<number>>
 ) {
     console.log('Analyzing CV:', cvFile?.name);
     console.log('Job URL:', jobUrl);
@@ -17,10 +17,10 @@ async function analyzeCV(
     // Iniciar animación de progreso
     setProgress(0);
     const progressInterval = setInterval(() => {
-        setProgress(prev => {
+        setProgress((prev: number) => {
             // Incrementa hasta 98% como máximo durante la carga
             if (prev < 98) {
-                return prev + Math.random() * 2;
+            return prev + Math.random() * 2;
             }
             return prev;
         });
