@@ -1,12 +1,11 @@
 <p align="center">
-  <img src="./public/dreamjoblogo.png" width="400"/>
+  <img src="./public/dreamjoblogo.png" width="200"/>
 </p>
 <p align="center">
-  <img src="./public/interface2.png" width="1600"/>
+  <img src="./public/interface2.png" width="800"/>
+  <img src="./public/results.png" width="800"/
 </p>
-<p align="center">
-  <img src="./public/results.png" width="1600"/>
-</p>
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
