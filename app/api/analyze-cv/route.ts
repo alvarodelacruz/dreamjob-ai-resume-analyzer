@@ -49,7 +49,7 @@ export async function POST(request: Request) {
         // Extract text from job URL
         if (jobUrl) {
             try {
-                console.log('Procesando URL o texto del trabajo:', jobUrl);
+                //console.log('Procesando URL o texto del trabajo:', jobUrl);
                 
                 // Verificar si jobUrl es una URL válida
                 let isUrl = false;
@@ -92,20 +92,35 @@ export async function POST(request: Request) {
             }
         }
 
-        console.log('cvText:', cvText);
-        console.log('jobText:', jobText);
+        //console.log('cvText:', cvText);
+        // console.log('jobText:', jobText);
+        //console.log('Longitud de cvText:', cvText.length);
 
         // Prepare prompt
         const prompt = `
-            Escribe la respuesta en español
+            Escribe la respuesta en español.
             Actúa como un asesor de carrera especializado en jóvenes sin experiencia. 
             El usuario te da su CV y una oferta de trabajo. 
             Importante: tu respuesta se va a usar como análisis en una página web usando Markdown, por lo que 
             ve al grano y da los datos y recomendaciones directamente.
             
             Empieza tu análisis calculando un porcentaje de coincidencia entre el CV y la oferta.
-            Este porcentaje debe estar en la primera línea de tu respuesta con este formato exacto:
-            "Porcentaje de coincidencia: X%" donde X es un número entre 0 y 100.
+
+
+            INSTRUCCIONES PARA CALCULAR EL PORCENTAJE DE COINCIDENCIA:
+            1. Identifica los requisitos clave de la oferta (habilidades, experiencia, idiomas, etc.)
+            2. Por cada requisito cumplido en el CV, suma:
+            - Requisito esencial cumplido: 15 puntos
+            - Requisito deseable cumplido: 10 puntos
+            - Habilidad transferible relevante: 5 puntos
+            3. Si el perfil cumple con:
+            - >80% de requisitos esenciales: añade 20 puntos extra
+            - Tiene experiencia relevante: añade 10 puntos extra
+            - Tiene certificaciones relevantes: añade 5 puntos extra
+            4. Calcula el porcentaje final sobre 100
+
+            Empieza tu análisis con el porcentaje en esta forma exacta:
+            "Porcentaje de coincidencia: X%" donde X es el número calculado.
             
             Luego, tu tarea es comparar ambos y generar un análisis claro con estos apartados:
 
@@ -146,12 +161,14 @@ export async function POST(request: Request) {
             ${jobText}
         `;
 
+        const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+
         // Send prompt to Google Gemini API
         const geminiResponse = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-goog-api-key': `AIzaSyCoiTkZx3QbP6gFXDR6JPCVaYuTwluqOVQ`, // Tu clave de API
+               'X-goog-api-key': GEMINI_API_KEY!,
             },
             body: JSON.stringify({
                 contents: [
@@ -174,12 +191,27 @@ export async function POST(request: Request) {
         console.log('Gemini API response received');
 
         // Extraer el texto generado de la respuesta
-        let resultText = "No se pudo generar análisis";
+        let resultText = "Por favor, asegúrate de proporcionar un CV válido y una descripción del puesto.";
+        
         if (geminiData.candidates && geminiData.candidates[0]?.content?.parts) {
             const parts = geminiData.candidates[0].content.parts;
-            resultText = parts.map((part: any) => part.text || '').join(' ');
+            resultText = parts.map((part: any) => part.text || '').join('\n');
+            
+            // Verificar si la respuesta contiene el formato esperado
+            if (!resultText.includes('Porcentaje de coincidencia:')) {
+                console.error('Respuesta de Gemini no tiene el formato esperado:', resultText);
+                resultText = "Error: La respuesta no tiene el formato esperado. Por favor, inténtalo de nuevo.";
+            }
+            
+            // Log para debugging
+            console.log('Resultado procesado:', resultText.substring(0, 200) + '...');
+        } else if (geminiData.error) {
+            console.error('Error from Gemini API:', geminiData.error);
+            resultText = `Error en el análisis: ${geminiData.error.message || 'Error desconocido'}`;
         }
+
         return NextResponse.json({ result: resultText });
+
     } catch (error) {
         console.error('Error principal de la API:', error);
         return NextResponse.json({ 

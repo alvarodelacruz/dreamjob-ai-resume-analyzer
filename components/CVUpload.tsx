@@ -6,9 +6,14 @@ const CVUpload: React.FC<{ setCvFile: (file: File | null) => void }> = ({ setCvF
   const [fileName, setFileName] = useState<string>('');
   
   return (
-    <div className="w-full max-w-lg mb-6 flex flex-col items-center">
-      <label className="block text-[#E64A2E] text-lg font-medium mb-2 text-center">
-        Introduce tu CV
+   <div className="w-full max-w-lg mb-6 flex flex-col items-center">
+      <label className="relative group mb-4">
+        <h2 className="text-2xl font-bold text-center">
+          <span className="bg-gradient-to-r from-[#a31900] to-[#f4573b] text-transparent bg-clip-text">
+            Introduce tu CV
+          </span>
+        </h2>
+        <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-[#FF5733] to-[#E64A2E] transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
       </label>
       <div className="w-full flex flex-col items-center">
         {/* Contenedor personalizado para el input file */}

@@ -61,16 +61,18 @@ export async function POST(request: Request) {
             Genera una versión optimizada del CV original sin añadir información falsa, no te inventes nada
 
             IMPORTANTE: No escribas saludo, ni digas que cambios has hecho. Pega directamente el CV, ya que estoy usando una API REST para mejorar CV y necesito que seas directo.
+            En español, por favor.
         `;
         
         try {
             // Llamar a la API de Gemini para generar el CV optimizado
+            const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
             console.log('Enviando solicitud a Gemini para optimizar CV');
             const geminiResponse = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-goog-api-key': `AIzaSyDnVELTa2yMfmiW2-fOD6HlcDj1G7yq4XQ`,
+                    'X-goog-api-key': GEMINI_API_KEY!,
                 },
                 body: JSON.stringify({
                     contents: [
