@@ -204,7 +204,7 @@ export async function POST(request: Request) {
             }
             
             // Log para debugging
-            console.log('Resultado procesado:', resultText.substring(0, 200) + '...');
+            //console.log('Resultado procesado:', resultText.substring(0, 200) + '...');
         } else if (geminiData.error) {
             console.error('Error from Gemini API:', geminiData.error);
             resultText = `Error en el análisis: ${geminiData.error.message || 'Error desconocido'}`;

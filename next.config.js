@@ -1,7 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  // swcMinify es ahora el comportamiento por defecto en Next.js 13+
+    experimental: {
+        allowedDevOrigins: ['http://localhost:3000', 'http://192.168.1.42'],
+    },
+    webpack: (config) => {
+        config.resolve.fallback = {
+            ...config.resolve.fallback,
+            canvas: false,
+            encoding: false
+        };
+        return config;
+    },
 }
 
 module.exports = nextConfig

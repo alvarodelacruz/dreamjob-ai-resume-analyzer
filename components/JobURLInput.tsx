@@ -2,7 +2,10 @@
 
 import React, { useState } from 'react';
 
-const JobURLInput: React.FC<{ setJobUrl: (url: string) => void }> = ({ setJobUrl }) => {
+const JobURLInput: React.FC<{ 
+    setJobUrl: (url: string) => void;
+    setJobContent: (content: string) => void;
+}> = ({ setJobUrl, setJobContent }) => {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
@@ -26,8 +29,9 @@ const JobURLInput: React.FC<{ setJobUrl: (url: string) => void }> = ({ setJobUrl
               className="w-full p-4 rounded-lg bg-white focus:outline-none resize-none text-gray-600 placeholder-gray-400"
               rows={2}
               onChange={(e) => {
-                const url = e.target.value;
-                setJobUrl(url);
+                const content = e.target.value;
+                setJobUrl(content);
+                setJobContent(content);
               }}
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}

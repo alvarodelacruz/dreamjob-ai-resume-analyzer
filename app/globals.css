@@ -46,37 +46,61 @@ body {
   animation: pulse 3s infinite;
 }
 
-@keyframes pulse {
-  0% {
-    text-shadow: 0 0 5px rgba(255, 87, 51, 0.3);
-  }
-  50% {
-    text-shadow: 0 0 15px rgba(255, 87, 51, 0.5);
-  }
-  100% {
-    text-shadow: 0 0 5px rgba(255, 87, 51, 0.3);
-  }
+.chatbot-window {
+    width: 24rem;
+    height: 500px;
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    font-size: 0.85rem; /* Tamaño de fuente más pequeño */
+    line-height: 1rem;
 }
 
-@keyframes gradient-xy {
-  0%, 100% {
-    background-size: 400% 400%;
-    background-position: left top;
-  }
-  25% {
-    background-size: 400% 400%;
-    background-position: right top;
-  }
-  50% {
-    background-size: 400% 400%;
-    background-position: right bottom;
-  }
-  75% {
-    background-size: 400% 400%;
-    background-position: left bottom;
-  }
+
+.chatbot-window .message-text {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
 }
 
-.animate-gradient-xy {
-  animation: gradient-xy 15s ease infinite;
+
+.chatbot-window strong {
+    font-weight: 600;
+    color: #E64A2E; /* Color destacado para el texto en negrita */
+}
+
+@media (max-width: 640px) {
+    .chatbot-window {
+        width: calc(100vw - 1rem);
+        margin: 0 1rem;
+    }
+}
+
+/* Estilos específicos para los mensajes del chat */
+.chatbot-window .flex-1.overflow-y-auto.p-4.space-y-4 > div > div {
+    max-width: 80%;
+    padding-bottom: 0.15rem;
+    /*padding: 0.35rem 0.75rem !important; /* Padding vertical más pequeño, horizontal igual */
+    border-radius: 0.5rem;
+}
+
+.chatbot-window .flex-1.overflow-y-auto.p-4.space-y-4 > div {
+    display: flex;
+    margin-bottom: 0.5rem;
+}
+
+/* Estilos para los mensajes del usuario */
+.chatbot-window .justify-end > div {
+    background: linear-gradient(to right, #FF5733, #E64A2E);
+    color: white;
+}
+
+/* Estilos para los mensajes del asistente */
+.chatbot-window .justify-start > div {
+    background-color: #f3f4f6;
+    color: #1f2937;
+}
+
+/* Ajuste del espacio entre mensajes */
+.chatbot-window .space-y-4 > * + * {
+    margin-top: 0.5rem;
 }
